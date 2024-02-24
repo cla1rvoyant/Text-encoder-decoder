@@ -8,7 +8,7 @@ using namespace std;
 int reverse(int n)
 {
 	if (n < 0)
-		return 26 + n;
+	    return 26 + n;
 	else
 		return n;
 }
@@ -44,7 +44,7 @@ int main()
         {
             string line;
 
-            cout << "Выберите шифр:\n1)Шифр Цезаря\n2)Шифр пар\n3)Шифр Виженера\n";
+            cout << "Выберите шифр:\n1)Шифр Цезаря\n2)Шифр пар\n3)Шифр Виженера\n4)Шифр Атбаш\n";
             cin >> agree;
 
             if (agree == 1)
@@ -144,7 +144,34 @@ int main()
                 }
                 in.close();
             }
-                cout << "Зашифрованный текст в файле Cipher.txt.";
+
+            if (agree == 4)
+            {
+                ifstream in;
+                in.open("Text.txt");
+                if (in.is_open())
+                {
+                    while (getline(in, line))
+                    {
+                        ofstream out;
+                        out.open("Cipher.txt", ios::app);
+                        if (out.is_open())
+                        {
+                            for (int i = 0; i < size(line); i++)
+                            {
+                                if (line[i] >= 'A' && line[i] <= 'Z')
+                                    line[i] = alphabet_inUpperCase[(size(alphabet_inUpperCase) - alphabet_inUpperCase.find(line[i]) - 1) % size(alphabet_inUpperCase)];
+
+                                if (line[i] >= 'a' && line[i] <= 'z')
+                                    line[i] = alphabet[(size(alphabet) - alphabet.find(line[i]) - 1) % size(alphabet)];
+                            }
+                            out << line << "\n";
+                        }
+                    }
+                }
+                in.close();
+            }
+            cout << "Зашифрованный текст в файле Cipher.txt.";
         }
             return 0;
     }
@@ -158,14 +185,12 @@ int main()
         {
             string line;
 
-            cout << "Выберите шифр:\n1)Шифр Цезаря\n2)Шифр пар\n3)Шифр Виженера\n";
+            cout << "Выберите шифр:\n1)Шифр Цезаря\n2)Шифр пар\n3)Шифр Виженера\n4)Шифр Атбаш\n";
             cin >> agree;
 
             if (agree == 1)
             {
                 int n;
-                int caesar_pos;
-
                 cout << "Введите длину сдвига для шифра Цезаря: ";
                 cin >> n;
                 cout << "\n";
@@ -191,14 +216,12 @@ int main()
                             out << line << "\n";
                         }
                     }
-                    cout << "Расшифрованный текст в файле Text.txt.";
                 }
+                in.close();
             }
 
             if (agree == 2)
             {
-                int pair_pos;
-
                 ifstream in;
                 in.open("Cipher.txt");
                 if (in.is_open())
@@ -220,8 +243,8 @@ int main()
                             out << line << "\n";
                         }
                     }
-                    cout << "Расшифрованный текст в файле Text.txt.";
                 }
+                in.close();
             }
 
             if (agree == 3)
@@ -258,9 +281,37 @@ int main()
                             out << line << "\n";
                         }
                     }
-                    cout << "Расшифрованный текст в файле Text.txt.";
                 }
+                in.close();
             }
+
+            if (agree == 4)
+            {
+                ifstream in;
+                in.open("Cipher.txt");
+                if (in.is_open())
+                {
+                    while (getline(in, line))
+                    {
+                        ofstream out;
+                        out.open("Text.txt", ios::app);
+                        if (out.is_open())
+                        {
+                            for (int i = 0; i < size(line); i++)
+                            {
+                                if (line[i] >= 'A' && line[i] <= 'Z')
+                                line[i] = alphabet_inUpperCase[(size(alphabet_inUpperCase) - alphabet_inUpperCase.find(line[i]) - 1) % size(alphabet_inUpperCase)];
+                            
+                                if (line[i] >= 'a' && line[i] <= 'z')
+                                    line[i] = alphabet[(size(alphabet) - alphabet.find(line[i]) - 1) % size(alphabet)];
+                            }
+                            out << line << "\n";
+                        }
+                    }
+                }
+                in.close();
+            }
+            cout << "Расшифрованный текст в файле Text.txt.";
         }
     }
 }
