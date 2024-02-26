@@ -8,7 +8,7 @@ using namespace std;
 int reverse(int n)
 {
 	if (n < 0)
-	    return 26 + n;
+		return 26 + n;
 	else
 		return n;
 }
